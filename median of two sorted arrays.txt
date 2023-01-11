@@ -1,0 +1,27 @@
+int min(int x, int y) {
+    return x < y ? x : y;
+}
+
+int find_nth_element(int* nums1, int nums1_size, int* nums2, int nums2_size, int n) {
+    if (nums2_size <  nums1_size)
+        return find_nth_element(nums2, nums2_size, nums1, nums1_size, n);
+    if (nums1_size == 0)
+        return nums2[n-1];
+    if (n == 1)
+        return min(nums1[0], nums2[0]);
+    int half1 = min(nums1_size, n / 2);
+    int half2 = n - half1;
+    if (nums1[half1-1] == nums2[half2-1])
+        return nums1[half1-1];
+    if (nums1[half1-1] <  nums2[half2-1])
+        return find_nth_element(nums1 + half1, nums1_size - half1, nums2, half2, n - half1);
+    return find_nth_element(nums1, half1, nums2 + half2, nums2_size - half2, n - half2);
+}
+
+double findMedianSortedArrays(int* nums1, int nums1_size, int* nums2, int nums2_size) {
+    int sum = nums1_size + nums2_size;
+    if (sum&1)
+        return find_nth_element(nums1, nums1_size, nums2, nums2_size, sum / 2 + 1);
+    return (find_nth_element(nums1, nums1_size, nums2, nums2_size, sum / 2 + 1) +
+            find_nth_element(nums1, nums1_size, nums2, nums2_size, sum / 2)) / 2.0;
+}
