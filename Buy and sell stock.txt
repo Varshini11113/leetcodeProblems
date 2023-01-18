@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        /* 2 approach
+        1st brute force
+        intially max = 0
+        traverse array i for outer loop
+        traverse array j for inner loop
+        if j > i then find the diff and store it in max, then compare max with diff store the maximum value in max.
+        int maxi = 0;
+        int n = prices.size();
+        for(int i = 0; i<n; i++){
+            for(int j = i+1; j<n; j++){
+                if(prices[j] > prices[i]){
+                    maxi = max(maxi, prices[j] - prices[i]);
+                }
+            }
+        }
+        return maxi;
+        But time limit exceeds so lets try second approach.
+
+        here we will find the minimum value and find the diff by comaparing it with grater value. return the greater value.
+        initially max = 0
+        1st find minimum value by traversing the array.
+        if it is minimum store it in min variable
+        else compare the diff with min value.
+        store the greater value in max.
+        */
+
+        int mini = INT_MAX;
+        int n = prices.size();
+        int maxi = 0;
+        for(int i = 0; i<n; i++){
+            if(prices[i] < mini){
+                mini = prices[i];
+            }
+            else{
+                maxi = max(maxi, prices[i] - mini); 
+            }
+        }
+        return maxi;
+    }
+};
